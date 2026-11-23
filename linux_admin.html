@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linux System Administration – বাংলা Command Guide</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#5d687b;--accent:#1769aa;--line:#dce3ed;--code:#101827}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Noto Sans Bengali","Hind Siliguri",sans-serif}
+header{background:linear-gradient(120deg,#102b46,#1769aa);color:#fff;padding:42px 20px}
+header .wrap,main{max-width:1100px;margin:auto}h1{font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.25;margin:0 0 12px}header p{max-width:780px;margin:0;color:#e6f1fb}
+main{padding:24px 18px 60px}.intro,.section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin:18px 0;box-shadow:0 3px 12px #102b4608}
+h2{font-size:1.45rem;color:#123c61;margin:0 0 12px;border-bottom:1px solid var(--line);padding-bottom:8px}h3{margin:18px 0 8px;color:#234b70}
+p{margin:8px 0}ul,ol{padding-left:25px}li{margin:4px 0}
+table{width:100%;border-collapse:collapse;margin:12px 0 18px;font-size:.95rem}th,td{text-align:left;padding:9px 11px;border:1px solid var(--line);vertical-align:top}th{background:#edf4fa;color:#173d5c}
+code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#eef2f7;padding:2px 5px;border-radius:5px;color:#183b5b}
+pre{overflow:auto;background:var(--code);color:#e6edf6;padding:15px;border-radius:10px;line-height:1.55}pre code{background:none;color:inherit;padding:0}
+.note{border-left:4px solid #d99a27;background:#fff8e9;padding:12px 15px;border-radius:6px;margin:12px 0}.tip{border-left:4px solid #21865b;background:#effaf4;padding:12px 15px;border-radius:6px;margin:12px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}.tile{background:#f4f8fc;border:1px solid var(--line);padding:14px;border-radius:10px}
+a{color:#075da5}footer{text-align:center;color:var(--muted);padding:25px}
+@media print{body{background:#fff;font-size:11pt}header{background:#fff;color:#111;padding:15px 0;border-bottom:2px solid #1769aa}header p{color:#333}.section,.intro{box-shadow:none;break-inside:avoid;border-color:#bbb}pre{white-space:pre-wrap;word-break:break-word}a{color:#111;text-decoration:none}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<h1>Linux System Administration</h1>
+<p>বাংলা Command Guide — Basic থেকে Advanced System Administration, Networking, Storage, Security, Monitoring, Troubleshooting ও Automation।</p>
+</div></header>
+<main>
+<div class="intro">
+<h2>একজন Linux System Administrator-এর কাজ</h2>
+<div class="grid">
+<div class="tile"><b>User Management</b><br>Users, groups ও permissions</div>
+<div class="tile"><b>Networking</b><br>IP, DNS, SSH ও firewall</div>
+<div class="tile"><b>Storage</b><br>Disk, partition, filesystem ও LVM</div>
+<div class="tile"><b>Security</b><br>Access control, hardening ও auditing</div>
+<div class="tile"><b>Monitoring</b><br>CPU, RAM, logs ও processes</div>
+<div class="tile"><b>Server Management</b><br>Services, packages ও backups</div>
+</div>
+</div>
+
+<section class="section"><h2>1. Basic Linux Commands</h2>
+<table><tr><th>Command</th><th>কাজ</th></tr>
+<tr><td><code>pwd</code></td><td>বর্তমান directory দেখায়</td></tr><tr><td><code>ls</code></td><td>ফাইল ও folder দেখায়</td></tr><tr><td><code>ls -la</code></td><td>Hidden file-সহ সব দেখায়</td></tr><tr><td><code>cd /var/log</code></td><td>Directory পরিবর্তন</td></tr><tr><td><code>cd ..</code></td><td>এক ধাপ পিছনে</td></tr><tr><td><code>cd ~</code></td><td>Home directory</td></tr><tr><td><code>clear</code></td><td>Terminal পরিষ্কার</td></tr><tr><td><code>whoami</code></td><td>বর্তমান user</td></tr><tr><td><code>hostname</code></td><td>Server/computer name</td></tr><tr><td><code>date</code></td><td>Date ও time</td></tr><tr><td><code>uname -a</code></td><td>Kernel information</td></tr><tr><td><code>uptime</code></td><td>কতক্ষণ server চালু</td></tr><tr><td><code>history</code></td><td>আগের command</td></tr><tr><td><code>man ls</code></td><td>Command manual</td></tr><tr><td><code>which python3</code></td><td>Command-এর location</td></tr></table>
+<pre><code>pwd
+ls -lah
+cd /etc
+whoami
+hostnamectl
+uname -r
+uptime</code></pre></section>
+
+<section class="section"><h2>2. File & Directory Management</h2>
+<table><tr><th>Command</th><th>কাজ</th></tr>
+<tr><td><code>touch file.txt</code></td><td>নতুন ফাইল তৈরি</td></tr><tr><td><code>mkdir backup</code></td><td>Folder তৈরি</td></tr><tr><td><code>mkdir -p a/b/c</code></td><td>Nested folder তৈরি</td></tr><tr><td><code>cp file.txt backup/</code></td><td>ফাইল copy</td></tr><tr><td><code>cp -r dir1 dir2</code></td><td>Folder copy</td></tr><tr><td><code>mv old.txt new.txt</code></td><td>Rename/move</td></tr><tr><td><code>rm file.txt</code></td><td>ফাইল delete</td></tr><tr><td><code>rmdir folder</code></td><td>Empty folder delete</td></tr><tr><td><code>rm -r folder</code></td><td>Folder ও contents delete</td></tr><tr><td><code>file test.txt</code></td><td>File type</td></tr><tr><td><code>stat file.txt</code></td><td>File metadata</td></tr><tr><td><code>ln -s /data data-link</code></td><td>Symbolic link তৈরি</td></tr><tr><td><code>find /var -name "*.log"</code></td><td>ফাইল খোঁজা</td></tr><tr><td><code>tree /etc</code></td><td>Directory structure</td></tr></table>
+<pre><code>mkdir -p /home/admin/backup
+touch /home/admin/test.txt
+cp /home/admin/test.txt /home/admin/backup/
+find /etc -name "*.conf"</code></pre>
+<div class="note"><b>সতর্কতা:</b> <code>rm -r</code> বা <code>rm -rf</code> চালানোর আগে path ভালোভাবে যাচাই করো। ভুল path-এ গুরুত্বপূর্ণ data মুছে যেতে পারে।</div></section>
+
+<section class="section"><h2>3. File Reading & Text Processing</h2>
+<table><tr><th>Command</th><th>কাজ</th></tr>
+<tr><td><code>cat file.txt</code></td><td>সম্পূর্ণ file পড়া</td></tr><tr><td><code>less file.txt</code></td><td>Page আকারে পড়া</td></tr><tr><td><code>head file.txt</code></td><td>প্রথম ১০ লাইন</td></tr><tr><td><code>tail file.txt</code></td><td>শেষ ১০ লাইন</td></tr><tr><td><code>tail -f app.log</code></td><td>Live log দেখা</td></tr><tr><td><code>grep "error" file.log</code></td><td>নির্দিষ্ট শব্দ খোঁজা</td></tr><tr><td><code>grep -i "error" file.log</code></td><td>Case-insensitive search</td></tr><tr><td><code>grep -r "root" /etc</code></td><td>Recursive search</td></tr><tr><td><code>sort file.txt</code></td><td>Sort</td></tr><tr><td><code>uniq file.txt</code></td><td>পরপর duplicate line বাদ</td></tr><tr><td><code>wc -l file.txt</code></td><td>Line count</td></tr><tr><td><code>cut -d: -f1 /etc/passwd</code></td><td>নির্দিষ্ট field বের করা</td></tr><tr><td><code>awk '{print $1}' file.txt</code></td><td>Column processing</td></tr><tr><td><code>sed 's/old/new/g' file.txt</code></td><td>Text replace করে output</td></tr><tr><td><code>diff file1 file2</code></td><td>দুই file তুলনা</td></tr></table>
+<pre><code>grep -i "failed" /var/log/auth.log
+tail -f /var/log/syslog
+grep -i "error" /var/log/nginx/error.log</code></pre></section>
+
+<section class="section"><h2>4. User & Group Management</h2>
+<table><tr><th>Command</th><th>কাজ</th></tr>
+<tr><td><code>who</code></td><td>Logged-in users</td></tr><tr><td><code>id</code></td><td>User ID ও Group ID</td></tr><tr><td><code>users</code></td><td>Logged-in username</td></tr><tr><td><code>useradd ashik</code></td><td>User তৈরি</td></tr><tr><td><code>adduser ashik</code></td><td>Interactive user creation (Debian/Ubuntu)</td></tr><tr><td><code>passwd ashik</code></td><td>Password সেট/পরিবর্তন</td></tr><tr><td><code>usermod</code></td><td>User account পরিবর্তন</td></tr><tr><td><code>userdel ashik</code></td><td>User delete</td></tr><tr><td><code>groupadd admins</code></td><td>Group তৈরি</td></tr><tr><td><code>groupdel admins</code></td><td>Group delete</td></tr><tr><td><code>groups ashik</code></td><td>User-এর groups</td></tr><tr><td><code>usermod -aG sudo ashik</code></td><td>Ubuntu-তে sudo group-এ যুক্ত</td></tr><tr><td><code>su - ashik</code></td><td>User switch</td></tr><tr><td><code>sudo command</code></td><td>Admin privilege-এ command</td></tr></table>
+<pre><code>sudo adduser testuser
+sudo groupadd developers
+sudo usermod -aG developers testuser
+id testuser
+groups testuser</code></pre>
+<div class="note">RHEL-based system-এ administrative group সাধারণত <code>wheel</code>; Ubuntu-তে সাধারণত <code>sudo</code>।</div></section>
+
+<section class="section"><h2>5. File Permissions & Ownership</h2>
+<p><b>Permission:</b> <code>r</code> = Read (4), <code>w</code> = Write (2), <code>x</code> = Execute (1)। Category: <code>u</code> = Owner, <code>g</code> = Group, <code>o</code> = Others।</p>
+<table><tr><th>Command</th><th>কাজ</th></tr><tr><td><code>ls -l</code></td><td>Permission দেখা</td></tr><tr><td><code>chmod 755 file</code></td><td>Permission পরিবর্তন</td></tr><tr><td><code>chmod 644 file</code></td><td>Owner read/write; others read</td></tr><tr><td><code>chmod +x script.sh</code></td><td>Execute permission যোগ</td></tr><tr><td><code>chown user file</code></td><td>Owner পরিবর্তন</td></tr><tr><td><code>chown user:group file</code></td><td>Owner ও group পরিবর্তন</td></tr><tr><td><code>chgrp admins file</code></td><td>Group পরিবর্তন</td></tr><tr><td><code>umask</code></td><td>Default permission mask</td></tr><tr><td><code>getfacl file</code></td><td>ACL দেখা</td></tr><tr><td><code>setfacl</code></td><td>ACL পরিবর্তন</td></tr></table>
+<pre><code>chmod 755 script.sh
+chmod 644 config.txt
+sudo chown ashik:admins config.txt
+ls -l</code></pre></section>
+
+<section class="section"><h2>6. Package Management</h2>
+<h3>Ubuntu / Debian – APT</h3>
+<table><tr><th>Command</th><th>কাজ</th></tr><tr><td><code>sudo apt update</code></td><td>Package index update</td></tr><tr><td><code>sudo apt upgrade</code></td><td>Installed packages upgrade</td></tr><tr><td><code>sudo apt install nginx</code></td><td>Software install</td></tr><tr><td><code>sudo apt remove nginx</code></td><td>Package remove</td></tr><tr><td><code>sudo apt purge nginx</code></td><td>Package ও system configuration remove</td></tr><tr><td><code>sudo apt autoremove</code></td><td>অপ্রয়োজনীয় dependency remove</td></tr><tr><td><code>apt search nginx</code></td><td>Package search</td></tr><tr><td><code>apt show nginx</code></td><td>Package details</td></tr><tr><td><code>dpkg -l</code></td><td>Installed package list</td></tr></table>
+<h3>RHEL / Rocky / AlmaLinux – DNF</h3>
+<table><tr><th>Command</th><th>কাজ</th></tr><tr><td><code>sudo dnf check-update</code></td><td>Update check</td></tr><tr><td><code>sudo dnf update</code></td><td>System update</td></tr><tr><td><code>sudo dnf install nginx</code></td><td>Software install</td></tr><tr><td><code>sudo dnf remove nginx</code></td><td>Software remove</td></tr><tr><td><code>dnf search nginx</code></td><td>Package search</td></tr><tr><td><code>dnf info nginx</code></td><td>Package information</td></tr><tr><td><code>dnf list installed</code></td><td>Installed packages</td></tr><tr><td><code>rpm -qa</code></td><td>সব RPM package list</td></tr></table></section>
+
+<section class="section"><h2>7. Process Management</h2>
+<table><tr><th>Command</th><th>কাজ</th></tr><tr><td><code>ps aux</code></td><td>সব running process</td></tr><tr><td><code>ps -ef</code></td><td>Process details</td></tr><tr><td><code>top</code></td><td>Live process monitoring</td></tr><tr><td><code>htop</code></td><td>Interactive monitoring (install লাগতে পারে)</td></tr><tr><td><code>pgrep nginx</code></td><td>নাম দিয়ে process ID খোঁজা</td></tr><tr><td><code>pidof nginx</code></td><td>Process ID</td></tr><tr><td><code>kill PID</code></td><td>Process-কে terminate signal</td></tr><tr><td><code>kill -9 PID</code></td><td>Force kill (শেষ বিকল্প)</td></tr><tr><td><code>pkill nginx</code></td><td>নাম দিয়ে process terminate</td></tr><tr><td><code>nice -n 10 command</code></td><td>Priority দিয়ে process চালানো</td></tr><tr><td><code>renice 5 -p PID</code></td><td>Priority পরিবর্তন</td></tr><tr><td><code>jobs</code></td><td>Shell jobs দেখা</td></tr><tr><td><code>bg</code> / <code>fg</code></td><td>Background/foreground job</td></tr><tr><td><code>nohup command &amp;</code></td><td>Hangup signal উপেক্ষা করে background-এ চালানো</td></tr></table>
+<pre><code>ps aux | grep nginx
+top
+free -h
+pgrep nginx</code></pre>
+<div class="note"><code>kill -9</code> graceful shutdown করতে দেয় না; আগে সাধারণ <code>kill</code> বা service manager ব্যবহার করো।</div></section>
+
+<section class="section"><h2>8. Systemd & Service Management</h2>
+<table><tr><th>Command</th><th>কাজ</th></tr><tr><td><code>systemctl status nginx</code></td><td>Service status</td></tr><tr><td><code>systemctl start nginx</code></td><td>Start</td></tr><tr><td><code>systemctl stop nginx</code></td><td>Stop</td></tr><tr><td><code>systemctl restart nginx</code></td><td>Restart</td></tr><tr><td><code>systemctl reload nginx</code></td><td>Configuration reload (supported হলে)</td></tr><tr><td><code>systemctl enable nginx</code></td><td>Boot-এ automatic start</td></tr><tr><td><code>systemctl disable nginx</code></td><td>Automatic start বন্ধ</td></tr><tr><td><code>systemctl is-active nginx</code></td><td>Active কিনা</td></tr><tr><td><code>systemctl is-enabled nginx</code></td><td>Enabled কিনা</td></tr><tr><td><code>systemctl list-units --type=service</code></td><td>Service list</td></tr><tr><td><code>systemctl daemon-reload</code></td><td>Unit file পরিবর্তনের পর systemd reload</td></tr></table>
+<pre><code>sudo systemctl start ssh
+sudo systemctl enable ssh
+sudo systemctl status ssh
+sudo systemctl restart nginx
+
+sudo reboot
+sudo shutdown -h now
+sudo shutdown -r now</code></pre>
+<div class="note">কিছু distribution-এ SSH service-এর নাম <code>ssh</code>, আবার RHEL-based system-এ সাধারণত <code>sshd</code>।</div></section>
+
+<section class="section"><h2>9. Networking Commands</h2>
+<table><tr><th>Command</th><th>কাজ</th></tr><tr><td><code>ip addr</code></td><td>IP address</td></tr><tr><td><code>ip link</code></td><td>Network interface</td></tr><tr><td><code>ip route</code></td><td>Routing table</td></tr><tr><td><code>ip neigh</code></td><td>Neighbor/ARP information</td></tr><tr><td><code>hostname -I</code></td><td>Server IP address</td></tr><tr><td><code>ping -c 4 8.8.8.8</code></td><td>Connectivity test</td></tr><tr><td><code>traceroute example.com</code></td><td>Network route</td></tr><tr><td><code>ss -tulnp</code></td><td>Listening TCP/UDP ports</td></tr><tr><td><code>ss -ant</code></td><td>TCP connections</td></tr><tr><td><code>dig example.com</code></td><td>DNS lookup</td></tr><tr><td><code>nslookup example.com</code></td><td>DNS query</td></tr><tr><td><code>host example.com</code></td><td>DNS resolution</td></tr><tr><td><code>curl -I https://example.com</code></td><td>HTTP response headers</td></tr><tr><td><code>wget URL</code></td><td>File download</td></tr><tr><td><code>nmcli device status</code></td><td>NetworkManager device status</td></tr><tr><td><code>ethtool eth0</code></td><td>Interface details</td></tr></table>
+<pre><code>ip addr
+ip route
+ping -c 4 8.8.8.8
+ping -c 4 google.com
+dig google.com
+ss -tulnp</code></pre>
+<p>Connectivity troubleshooting-এ প্রথমে local IP, তারপর gateway, এরপর external IP এবং সবশেষে DNS পরীক্ষা করো।</p></section>
+
+<section class="section"><h2>10. SSH & Remote Server Management</h2>
+<table><tr><th>Command</th><th>কাজ</th></tr><tr><td><code>ssh user@192.168.1.10</code></td><td>Remote login</td></tr><tr><td><code>ssh -p 2222 user@IP</code></td><td>Custom SSH port</td></tr><tr><td><code>ssh-keygen</code></td><td>SSH key তৈরি</td></tr><tr><td><code>ssh-copy-id user@IP</code></td><td>Public key copy</td></tr><tr><td><code>scp file user@IP:/tmp/</code></td><td>Remote file copy</td></tr><tr><td><code>scp -r folder user@IP:/tmp/</code></td><td>Folder copy</td></tr><tr><td><code>sftp user@IP</code></td><td>Secure file transfer</td></tr><tr><td><code>ssh -v user@IP</code></td><td>Verbose troubleshooting</td></tr></table>
+<pre><code>sudo systemctl status ssh
+sudo sshd -t
+sudo nano /etc/ssh/sshd_config</code></pre>
+<div class="note">Remote SSH configuration বদলানোর আগে বিদ্যমান session খোলা রাখো, syntax test করো এবং নতুন session দিয়ে login যাচাই না করে পুরোনো session বন্ধ কোরো না।</div></section>
+
+<section class="section"><h2>11. Firewall Management</h2>
+<h3>Ubuntu – UFW</h3>
+<pre><code>sudo ufw status
+sudo ufw enable
+sudo ufw allow 22/tcp
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw deny 8080/tcp
+sudo ufw delete allow 80/tcp</code></pre>
+<h3>RHEL – Firewalld</h3>
+<pre><code>sudo firewall-cmd --state
+sudo firewall-cmd --list-all
+sudo firewall-cmd --get-active-zones
+sudo firewall-cmd --add-service=http --permanent
+sudo firewall-cmd --add-service=https --permanent
+sudo firewall-cmd --reload</code></pre>
+<div class="note">Remote server-এ firewall পরিবর্তনের আগে SSH access অনুমোদিত আছে কিনা নিশ্চিত করো; নইলে remote access হারাতে পারো।</div></section>
+
+<section class="section"><h2>12. Disk & Storage Management</h2>
+<table><tr><th>Command</th><th>কাজ</th></tr><tr><td><code>lsblk</code></td><td>Disk ও partition</td></tr><tr><td><code>sudo fdisk -l</code></td><td>Partition details</td></tr><tr><td><code>df -h</code></td><td>Disk usage</td></tr><tr><td><code>df -Th</code></td><td>Filesystem type-সহ usage</td></tr><tr><td><code>du -sh /var/log</code></td><td>Folder size</td></tr><tr><td><code>du -ah /var</code></td><td>Directory/file size</td></tr><tr><td><code>blkid</code></td><td>Filesystem UUID ও type</td></tr><tr><td><code>mount</code></td><td>Mounted filesystem</td></tr><tr><td><code>umount /mnt/data</code></td><td>Unmount</td></tr><tr><td><code>findmnt</code></td><td>Mount information</td></tr><tr><td><code>free -h</code></td><td>RAM usage</td></tr><tr><td><code>swapon --show</code></td><td>Swap details</td></tr></table>
+<pre><code>df -h
+lsblk
+du -sh /var/log
+free -h
+
+sudo mkdir -p /mnt/data
+sudo mount /dev/sdb1 /mnt/data
+findmnt /mnt/data</code></pre>
+<div class="note">Partitioning, formatting ও mounting ভুল device-এ করলে data loss হতে পারে। আগে <code>lsblk</code>, UUID এবং backup যাচাই করো। <code>/etc/fstab</code> edit করলে reboot-এর আগে <code>sudo mount -a</code> দিয়ে পরীক্ষা করো।</div></section>
+
+<section class="section"><h2>13. LVM – Logical Volume Management</h2>
+<p>LVM storage-কে flexibleভাবে পরিচালনা করতে সাহায্য করে। PV = Physical Volume, VG = Volume Group, LV = Logical Volume।</p>
+<pre><code>sudo pvcreate /dev/sdb
+sudo pvs
+sudo vgcreate vg_data /dev/sdb
+sudo vgs
+sudo lvcreate -L 10G -n lv_backup vg_data
+sudo lvs
+
+sudo mkfs.ext4 /dev/vg_data/lv_backup
+sudo mkdir -p /backup
+sudo mount /dev/vg_data/lv_backup /backup
+df -h</code></pre>
+<div class="note">এগুলো উদাহরণ command। <code>/dev/sdb</code> সত্যিই সঠিক, খালি এবং ব্যবহারের অনুমোদিত disk কিনা নিশ্চিত না হয়ে চালাবে না।</div></section>
+
+<section class="section"><h2>14. Log Management & Monitoring</h2>
+<table><tr><th>Command</th><th>কাজ</th></tr><tr><td><code>journalctl</code></td><td>System logs</td></tr><tr><td><code>journalctl -xe</code></td><td>Recent log context</td></tr><tr><td><code>journalctl -f</code></td><td>Live logs</td></tr><tr><td><code>journalctl -u nginx</code></td><td>নির্দিষ্ট service logs</td></tr><tr><td><code>journalctl -b</code></td><td>Current boot logs</td></tr><tr><td><code>dmesg</code></td><td>Kernel messages</td></tr><tr><td><code>last</code></td><td>Login history</td></tr><tr><td><code>lastlog</code></td><td>Last login information</td></tr><tr><td><code>vmstat 1</code></td><td>System performance</td></tr><tr><td><code>iostat</code></td><td>Disk I/O (sysstat package)</td></tr><tr><td><code>sar</code></td><td>Historical performance (sysstat)</td></tr></table>
+<h3>Ubuntu/Debian logs</h3><pre><code>/var/log/syslog
+/var/log/auth.log
+/var/log/kern.log
+/var/log/dpkg.log</code></pre>
+<h3>RHEL-based logs</h3><pre><code>/var/log/messages
+/var/log/secure
+/var/log/cron</code></pre>
+<pre><code>sudo tail -f /var/log/auth.log
+sudo journalctl -p err -b
+sudo journalctl -u ssh -n 50</code></pre></section>
+
+<section class="section"><h2>15. Linux Security & Hardening</h2>
+<table><tr><th>Command / Tool</th><th>কাজ</th></tr><tr><td><code>sudo -l</code></td><td>নিজের sudo privileges দেখা</td></tr><tr><td><code>getent passwd</code></td><td>User database query</td></tr><tr><td><code>getent group</code></td><td>Group database query</td></tr><tr><td><code>chage -l user</code></td><td>Password aging information</td></tr><tr><td><code>visudo</code></td><td>নিরাপদভাবে sudoers edit</td></tr><tr><td><code>aa-status</code></td><td>AppArmor status</td></tr><tr><td><code>getenforce</code></td><td>SELinux mode</td></tr><tr><td><code>sestatus</code></td><td>SELinux details</td></tr><tr><td><code>ausearch</code></td><td>Audit event search</td></tr><tr><td><code>faillock</code></td><td>RHEL-এ failed login status</td></tr></table>
+<p>গুরুত্বপূর্ণ configuration files:</p>
+<pre><code>/etc/passwd
+/etc/shadow
+/etc/group
+/etc/sudoers
+/etc/ssh/sshd_config
+/etc/hosts
+/etc/fstab</code></pre>
+<p>Security tools: Fail2ban, AppArmor, SELinux, Lynis এবং Auditd।</p>
+<pre><code>sudo ss -tulnp
+sudo last
+sudo systemctl --failed
+sudo journalctl -p err -b</code></pre></section>
+
+<section class="section"><h2>16. Cron Jobs & Task Automation</h2>
+<table><tr><th>Command</th><th>কাজ</th></tr><tr><td><code>crontab -e</code></td><td>Cron edit</td></tr><tr><td><code>crontab -l</code></td><td>Cron list</td></tr><tr><td><code>crontab -r</code></td><td>নিজের crontab remove</td></tr><tr><td><code>systemctl status cron</code></td><td>Ubuntu/Debian cron service</td></tr><tr><td><code>systemctl status crond</code></td><td>RHEL cron service</td></tr></table>
+<p>Cron format: <code>minute hour day-of-month month day-of-week command</code></p>
+<pre><code># প্রতিদিন রাত ২টায়
+0 2 * * * /home/admin/backup.sh
+
+# প্রতি ৫ মিনিটে
+*/5 * * * * /home/admin/check.sh
+
+# প্রতি রবিবার রাত ৩টায়
+0 3 * * 0 /home/admin/weekly.sh</code></pre></section>
+
+<section class="section"><h2>17. Backup & Restore</h2>
+<table><tr><th>Command</th><th>কাজ</th></tr><tr><td><code>tar -cvf backup.tar folder/</code></td><td>Archive তৈরি</td></tr><tr><td><code>tar -czvf backup.tar.gz folder/</code></td><td>Compressed archive</td></tr><tr><td><code>tar -xzvf backup.tar.gz</code></td><td>Extract</td></tr><tr><td><code>gzip file</code></td><td>Compress</td></tr><tr><td><code>gunzip file.gz</code></td><td>Decompress</td></tr><tr><td><code>zip -r backup.zip folder/</code></td><td>ZIP archive</td></tr><tr><td><code>unzip backup.zip</code></td><td>ZIP extract</td></tr><tr><td><code>rsync -av source/ destination/</code></td><td>File sync</td></tr><tr><td><code>rsync -avz source/ user@IP:/backup/</code></td><td>Remote sync</td></tr></table>
+<pre><code>sudo tar -czvf /backup/etc-backup.tar.gz /etc
+rsync -avz /home/admin/ user@192.168.1.20:/backup/admin/</code></pre>
+<div class="tip">Backup সফল কিনা যাচাই করো এবং নিয়মিত restore test করো। Backup copy আলাদা storage বা location-এ রাখাও গুরুত্বপূর্ণ।</div></section>
+
+<section class="section"><h2>18. Web Server Administration</h2>
+<h3>Nginx</h3><pre><code>sudo apt install nginx
+sudo systemctl start nginx
+sudo systemctl enable nginx
+sudo systemctl status nginx
+sudo nginx -t
+sudo systemctl reload nginx</code></pre>
+<h3>Apache (Ubuntu/Debian)</h3><pre><code>sudo apt install apache2
+sudo systemctl start apache2
+sudo systemctl enable apache2
+sudo apachectl configtest
+sudo systemctl reload apache2</code></pre>
+<table><tr><th>Location</th><th>Purpose</th></tr><tr><td><code>/etc/nginx/</code></td><td>Nginx configuration</td></tr><tr><td><code>/var/www/html/</code></td><td>Website files (default example)</td></tr><tr><td><code>/var/log/nginx/</code></td><td>Nginx logs</td></tr><tr><td><code>/etc/apache2/</code></td><td>Apache configuration (Debian-based)</td></tr><tr><td><code>/var/log/apache2/</code></td><td>Apache logs</td></tr></table></section>
+
+<section class="section"><h2>19. System Information & Hardware</h2>
+<table><tr><th>Command</th><th>কাজ</th></tr><tr><td><code>lscpu</code></td><td>CPU information</td></tr><tr><td><code>lsmem</code></td><td>Memory information</td></tr><tr><td><code>free -h</code></td><td>RAM usage</td></tr><tr><td><code>lsblk</code></td><td>Storage devices</td></tr><tr><td><code>lspci</code></td><td>PCI devices</td></tr><tr><td><code>lsusb</code></td><td>USB devices</td></tr><tr><td><code>sudo dmidecode -t system</code></td><td>System hardware details</td></tr><tr><td><code>sensors</code></td><td>Temperature (lm-sensors)</td></tr><tr><td><code>uptime</code></td><td>Load average ও uptime</td></tr><tr><td><code>dmesg</code></td><td>Kernel hardware messages</td></tr><tr><td><code>uname -r</code></td><td>Kernel version</td></tr><tr><td><code>hostnamectl</code></td><td>Hostname ও OS details</td></tr></table></section>
+
+<section class="section"><h2>20. Linux Kernel Management</h2>
+<table><tr><th>Command</th><th>কাজ</th></tr><tr><td><code>uname -r</code></td><td>Kernel version</td></tr><tr><td><code>lsmod</code></td><td>Loaded modules</td></tr><tr><td><code>modinfo module_name</code></td><td>Module information</td></tr><tr><td><code>sudo modprobe module_name</code></td><td>Module load</td></tr><tr><td><code>sudo modprobe -r module_name</code></td><td>Module unload</td></tr><tr><td><code>sysctl -a</code></td><td>Kernel parameters</td></tr><tr><td><code>sysctl net.ipv4.ip_forward</code></td><td>IP forwarding setting দেখা</td></tr></table>
+<pre><code>uname -r
+lsmod
+sysctl net.ipv4.ip_forward</code></pre></section>
+
+<section class="section"><h2>21. Bash Scripting for Automation</h2>
+<h3>Disk monitoring</h3><pre><code>#!/bin/bash
+echo "Disk Usage Report"
+df -h</code></pre>
+<h3>Service monitoring</h3><pre><code>#!/bin/bash
+SERVICE="nginx"
+
+if systemctl is-active --quiet "$SERVICE"; then
+    echo "$SERVICE is running"
+else
+    echo "$SERVICE is not running"
+fi</code></pre>
+<h3>Server information</h3><pre><code>#!/bin/bash
+echo "Hostname:"
+hostname
+echo "Uptime:"
+uptime
+echo "Memory:"
+free -h
+echo "Disk:"
+df -h
+echo "IP Address:"
+hostname -I</code></pre>
+<pre><code>chmod +x system_info.sh
+./system_info.sh</code></pre></section>
+
+<section class="section"><h2>22. Important Linux Configuration Files</h2>
+<table><tr><th>File / Directory</th><th>Purpose</th></tr>
+<tr><td><code>/etc/passwd</code></td><td>User account information</td></tr><tr><td><code>/etc/shadow</code></td><td>Password hash ও aging data</td></tr><tr><td><code>/etc/group</code></td><td>Group information</td></tr><tr><td><code>/etc/fstab</code></td><td>Automatic filesystem mounts</td></tr><tr><td><code>/etc/hostname</code></td><td>Hostname</td></tr><tr><td><code>/etc/hosts</code></td><td>Local hostname resolution</td></tr><tr><td><code>/etc/resolv.conf</code></td><td>DNS resolver configuration</td></tr><tr><td><code>/etc/ssh/sshd_config</code></td><td>SSH server configuration</td></tr><tr><td><code>/etc/sudoers</code></td><td>Sudo permissions</td></tr><tr><td><code>/etc/crontab</code></td><td>System cron jobs</td></tr><tr><td><code>/etc/systemd/</code></td><td>Systemd configuration</td></tr><tr><td><code>/var/log/</code></td><td>System logs</td></tr><tr><td><code>/var/cache/</code></td><td>Application caches</td></tr><tr><td><code>/var/spool/</code></td><td>Queued jobs</td></tr><tr><td><code>/proc/</code></td><td>Process ও kernel information</td></tr><tr><td><code>/sys/</code></td><td>Kernel ও device interfaces</td></tr><tr><td><code>/dev/</code></td><td>Device files</td></tr><tr><td><code>/tmp/</code></td><td>Temporary files</td></tr></table></section>
+
+<section class="section"><h2>23. Troubleshooting – Real SysAdmin Tasks</h2>
+<table><tr><th>Problem</th><th>Useful commands</th></tr><tr><td>Server slow</td><td><code>top</code>, <code>htop</code>, <code>uptime</code></td></tr><tr><td>RAM pressure</td><td><code>free -h</code>, <code>vmstat 1</code></td></tr><tr><td>Disk full</td><td><code>df -h</code>, <code>du -sh /var/*</code></td></tr><tr><td>Service down</td><td><code>systemctl status nginx</code></td></tr><tr><td>Port conflict</td><td><code>ss -tulnp</code></td></tr><tr><td>DNS issue</td><td><code>dig example.com</code></td></tr><tr><td>Network issue</td><td><code>ip addr</code>, <code>ip route</code>, <code>ping</code></td></tr><tr><td>SSH issue</td><td><code>journalctl -u ssh -n 50</code></td></tr><tr><td>Boot failure</td><td><code>journalctl -b -p err</code></td></tr><tr><td>Kernel issue</td><td><code>dmesg -T</code></td></tr><tr><td>Failed services</td><td><code>systemctl --failed</code></td></tr><tr><td>Failed login</td><td><code>lastb</code> (সিস্টেমে available হলে)</td></tr></table>
+<h3>Scenario: Nginx website কাজ করছে না</h3>
+<pre><code># 1. Service status
+sudo systemctl status nginx
+
+# 2. Configuration test
+sudo nginx -t
+
+# 3. Listening ports
+sudo ss -tulnp
+
+# 4. Error logs
+sudo tail -n 50 /var/log/nginx/error.log
+
+# 5. Disk space
+df -h
+
+# 6. প্রয়োজন হলে restart
+sudo systemctl restart nginx
+
+# 7. Local HTTP response verify
+curl -I http://localhost</code></pre>
+<p>প্রথমে evidence সংগ্রহ করো, তারপর root cause identify করে প্রয়োজনীয় change করো এবং শেষে service verify করো।</p></section>
+
+<section class="section"><h2>24. Linux System Administrator Skill Matrix</h2>
+<table><tr><th>Level</th><th>শেখার বিষয়</th></tr><tr><td>L1 – Junior</td><td>Basic commands, files, users, permissions</td></tr><tr><td>L1 – Support</td><td>Software installation, troubleshooting, SSH</td></tr><tr><td>L2 – System Admin</td><td>Networking, firewall, storage, LVM</td></tr><tr><td>L2 – Server Admin</td><td>Nginx, Apache, DNS, DHCP</td></tr><tr><td>L3 – Senior Admin</td><td>Automation, scripting, monitoring</td></tr><tr><td>L3 – Infrastructure</td><td>High availability, virtualization, disaster recovery</td></tr><tr><td>Advanced</td><td>Ansible, Docker, Kubernetes, Cloud, Infrastructure as Code</td></tr></table></section>
+
+<section class="section"><h2>25. Practical Linux SysAdmin Lab Projects</h2>
+<ol><li>Ubuntu Server install ও initial configuration</li><li>User, Group এবং Permission Management</li><li>SSH Remote Server Administration</li><li>Nginx Web Server deployment</li><li>UFW Firewall configuration</li><li>Disk Partition ও LVM Management</li><li>Cron Job দিয়ে automated backup</li><li>System Monitoring ও Log Analysis</li><li>Bash Script দিয়ে server health check</li><li>Wazuh SIEM দিয়ে Linux log monitoring</li></ol></section>
+
+<section class="section"><h2>26. Recommended Linux Administration Tools</h2>
+<ul><li><b>Ubuntu Server:</b> Linux server administration practice — <a href="https://ubuntu.com/server">ubuntu.com/server</a></li><li><b>Rocky Linux:</b> Enterprise Linux practice — <a href="https://rockylinux.org/">rockylinux.org</a></li><li><b>Ansible:</b> Server automation — <a href="https://docs.ansible.com/">Ansible documentation</a></li><li><b>Docker:</b> Container management — <a href="https://docs.docker.com/">Docker documentation</a></li><li><b>Wazuh:</b> Security monitoring — <a href="https://documentation.wazuh.com/">Wazuh documentation</a></li></ul></section>
+
+<section class="section"><h2>27. Learning Roadmap – 8 Weeks</h2>
+<table><tr><th>সময়</th><th>Focus</th></tr><tr><td>Week 1</td><td>Basic commands, files, permissions</td></tr><tr><td>Week 2</td><td>Users, groups, packages, services</td></tr><tr><td>Week 3</td><td>Networking, SSH, Firewall</td></tr><tr><td>Week 4</td><td>Storage, LVM, backup</td></tr><tr><td>Week 5</td><td>Logs, monitoring, troubleshooting</td></tr><tr><td>Week 6</td><td>Bash scripting, Cron</td></tr><tr><td>Week 7</td><td>Nginx, Apache, DNS</td></tr><tr><td>Week 8</td><td>Security hardening, Wazuh</td></tr></table>
+<div class="tip"><b>শেখার পদ্ধতি:</b> শুধু command মুখস্থ করবে না। প্রতিটি command কেন, কখন ব্যবহার হয়, output কী বোঝায় এবং সমস্যা হলে কীভাবে troubleshoot করতে হয়—সেগুলো হাতে-কলমে শিখবে।</div></section>
+
+<footer>Linux System Administration – বাংলা Command Guide<br>Practice commands in a test VM before applying them to production servers.</footer>
+</main>
+</body></html>
